@@ -23,11 +23,17 @@ I tried other network architectures (adding and subtracting hidden layers and ch
 As for the hyperparameters, this is what got me the best results:
 
 BUFFER_SIZE = int(1e6)  # replay buffer size
+
 BATCH_SIZE = 256        # minibatch size
+
 GAMMA = 0.99            # discount factor
+
 TAU = 1e-3              # for soft update of target parameters
+
 LR_ACTOR = 2e-4         # learning rate of the actor 
+
 LR_CRITIC = 2e-4        # learning rate of the critic
+
 WEIGHT_DECAY = 0        # L2 weight decay
 
 ### Ideas for future improvements
