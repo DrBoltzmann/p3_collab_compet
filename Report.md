@@ -16,9 +16,19 @@ The best result I managed to obtain was solving the taks in 1614 episodes. The p
 
 To achieve that result I used an adapted version of the [Deep Deterministic Policy Gradient](https://arxiv.org/abs/1509.02971) (DDPG) [code](https://github.com/udacity/deep-reinforcement-learning/blob/master/ddpg-pendulum/ddpg_agent.py) provided in lesson 5. The DDPG algorithm is similar to the [DQN](https://www.nature.com/articles/nature14236) algorithm in that there are two neural networks with identical architecture. But DQN can't handle continuous action spaces - which is the case here, as each of the four dimensions of the action space ranges from -1 to +1. The DDPG algorithm handles that by having one neural net - the actor - pick (what it believes to be) the best policy for each state and having the other neural net - the critic - evaluate those policy choices. That way we are able to work with continuous spaces. DDPG also uses replay buffer, just like DQN, but with "soft" updates - we don't outright clone one network into the other; instead we make them closer to each other at each update. (Though as we saw in the previous module it's possible to use soft updates with the DQN algorithm too.)
 
-The structure of both my neural nets (actor and critic) is the same: one input layer of size 8 (the size of the state space), two hidden layers of size 256 each, and one output layer of size 2 (the size of the action space). The activation function is ReLU except for the output layer, where I used tanh. Following a comment I saw on Student Hub I batch-normalized the output of the first hidden layer - that greatly improved the result. I also tweaked some of the hyperparameters (LR_ACTOR and LR_CRITIC).
+The structure of both my neural nets (actor and critic) is the same: one input layer of size 8 (the size of the state space), two hidden layers of size 256 each, and one output layer of size 2 (the size of the action space). The activation function is ReLU except for the output layer, where I used tanh. Following a comment I saw on Student Hub I batch-normalized the output of the first hidden layer - that greatly improved the result.
 
 I tried other network architectures (adding and subtracting hidden layers and changing the size of each hidden layer) but they didn't improve the model.
+
+As for the hyperparameters, this is what got me the best results:
+
+BUFFER_SIZE = int(1e6)  # replay buffer size
+BATCH_SIZE = 256        # minibatch size
+GAMMA = 0.99            # discount factor
+TAU = 1e-3              # for soft update of target parameters
+LR_ACTOR = 2e-4         # learning rate of the actor 
+LR_CRITIC = 2e-4        # learning rate of the critic
+WEIGHT_DECAY = 0        # L2 weight decay
 
 ### Ideas for future improvements
 
